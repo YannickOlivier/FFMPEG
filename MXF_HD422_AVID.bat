@@ -1,9 +1,9 @@
 @REM ***************************************************************************
 @REM *  Video file to XDCAM HD422 1080/50i compliant with Avid Media Composer  *
-@REM * 					IMPORT : OK // Link To Media (AMA) :                  *
-@REM * 				Modify FFMPEG & FFMBC variable to your app link           *
-@REM * 	  How to use ? Pass your video file in parameters of this Batch %1    *
-@REM *			 Thanks to FFMPEG devs & FFMBC dev Baptiste Coudurier         *
+@REM * 					IMPORT : OK // Link To Media (AMA) :                   *
+@REM * 				Modify FFMPEG & FFMBC variable to your app link            *
+@REM * 	  How to use ? Pass your video file in parameters of this Batch %1     *
+@REM *			 Thanks to FFMPEG devs & FFMBC dev Baptiste Coudurier          *
 @REM ***************************************************************************
 
 @REM *************
