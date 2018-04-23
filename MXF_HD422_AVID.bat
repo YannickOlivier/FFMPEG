@@ -1,23 +1,26 @@
-***************************************************************************
-*  Video file to XDCAM HD422 1080/50i compliant with Avid Media Composer  *
-* 					IMPORT : OK // Link To Media (AMA) :                  *
-* 				Modify FFMPEG & FFMBC variable to your app link           *
-* 	  How to use ? Pass your video file in parameters of this Batch %1    *
-*			 Thanks to FFMPEG devs & FFMBC dev Baptiste Coudurier         *
-***************************************************************************
-@ECHO OFF 
+@REM ***************************************************************************
+@REM *  Video file to XDCAM HD422 1080/50i compliant with Avid Media Composer  *
+@REM * 					IMPORT : OK // Link To Media (AMA) :                  *
+@REM * 				Modify FFMPEG & FFMBC variable to your app link           *
+@REM * 	  How to use ? Pass your video file in parameters of this Batch %1    *
+@REM *			 Thanks to FFMPEG devs & FFMBC dev Baptiste Coudurier         *
+@REM ***************************************************************************
+
+@REM *************
+@REM * Variables *
+@REM *************
 
 set FFPROBE=
 set FFMPEG=
 set FFMBC=
 set TEMP=
-
+set FILE=%1
 set "COMMANDLINE=%FFPROBE% -v error -select_streams v:0 -show_entries stream=width,height -of csv=s=x:p=0 %1"
 setlocal EnableDelayedExpansion
+
 for /F "delims=" %%I in ('!COMMANDLINE!') do set "RESOLUTION=%%I"
 echo %RESOLUTION%
 
-set FILE=%1
 
 if %RESOLUTION% == 3840x2160 (
 	echo ok
@@ -27,9 +30,10 @@ if %RESOLUTION% == 3840x2160 (
 	call :convertOTHER
 	)
 
-*************
-* Fonctions *
-*************
+
+@REM *************
+@REM * Fonctions *
+@REM *************
 
 :convertUHD
 echo convertUHD
@@ -42,7 +46,5 @@ exit /B
 
 :convertOTHER
 echo convertOTHER
-set name='echo "%FILE%"'
-echo $name
 %FFMBC% -i %FILE% -threads 4 -tff -target xdcamhd422 -s hd1080 -pix_fmt yuv422p -f mxf -an %FILE%_CONVERT_XDCAMHD422.MXF -acodec pcm_s24le -ar 48000 -newaudio -acodec pcm_s24le -ar 48000 -newaudio -map_audio_channel 0:1:0:0:1:0 -map_audio_channel 0:1:0:0:2:0
 exit /B
